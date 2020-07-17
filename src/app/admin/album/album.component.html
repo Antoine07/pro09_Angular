@@ -18,7 +18,7 @@
         <td>{{album.id}}</td>
         <td>{{album.name}}</td>
         <td>{{album.title}}</td>
-        <td>{{album.duration}} seconds</td>
+        <td>{{album.duration ? album.duration : 0 }} seconds</td>
         <td> <button class="btn btn-info" routerLink="/admin/update/{{album.id}}">Edit</button></td>
         <td> <button class="btn btn-danger" (click)="delete(album)">Delete</button></td>
       </tr>

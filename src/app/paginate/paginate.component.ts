@@ -43,14 +43,6 @@ export class PaginateComponent implements OnInit {
         this.pages.push(i);
       }
     })
-    
-    // this.total = this.aS.count();
-    // this.numberPages = Math.ceil(this.total / this.perPage);
-    // this.currentPage = page;
-    // this.pages = [];
-    // for (let i = 1; i < this.numberPages + 1; i++) {
-    //   this.pages.push(i);
-    // }
   }
 
   selectedPage(page: number) {

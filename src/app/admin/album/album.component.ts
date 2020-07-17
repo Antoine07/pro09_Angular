@@ -18,24 +18,20 @@ export class AlbumComponent implements OnInit {
 
   ngOnInit(): void {
     this.albums = this.aS.paginate(0,this.aS.paginateNumberPage());
+
+    this.message = "";
   }
 
   paginate($event) {
     this.albums = this.aS.paginate($event.start, $event.end);
   }
 
-  edit(id){
-    console.log(id);
-
-  }
   delete(album : Album){
 
-    console.log(album)
-   
-    this.aS.deleteAlbum(album).subscribe( message => {
-
-      this.message = message;
-      this.albums = this.aS.paginate(0,this.aS.paginateNumberPage());
+    this.aS.deleteAlbum(album).subscribe( info => {
+      this.aS.sendCurrentNumberPage.next( info.count ); // recalculer le nombre d'item dans la pagination
+      this.message = `L'album ${info.album.name} a bien été supprimé`;
+      this.albums = this.aS.paginate(0,this.aS.paginateNumberPage()); // reload les albums après suppression
     });
     
   }

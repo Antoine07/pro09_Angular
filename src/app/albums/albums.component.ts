@@ -20,10 +20,8 @@ export class AlbumsComponent implements OnInit {
 
     // récupération des données depuis Firebase avec la méthode HttpClient
     this.aS.getAlbums().subscribe(
-      list_albums => {this.albums = list_albums; console.log(list_albums)}
+      albums => { this.albums = albums; }
     );
-
-
   }
 
   ngOnInit() {
@@ -31,10 +29,8 @@ export class AlbumsComponent implements OnInit {
       0,
       this.aS.paginateNumberPage()
     ).subscribe(
-      result => {this.albums = result;}
+      result => { this.albums = result; }
     );
-
-
   }
 
   onSelect(album: Album) {
@@ -48,13 +44,13 @@ export class AlbumsComponent implements OnInit {
     this.aS.switchOn($event);
   }
 
-  search($event : { albums : [], reload :  boolean }) {
+  search($event: { albums: [], reload: boolean }) {
 
     const { albums, reload } = $event;
 
-    if( reload ){
+    if (reload) {
       this.aS.paginate(0, this.aS.paginateNumberPage()).subscribe(
-          albums => this.albums = albums
+        albums => this.albums = albums
       );
 
       return;
@@ -66,7 +62,7 @@ export class AlbumsComponent implements OnInit {
   // mise à jour de la pagination
   paginate($event) {
     this.aS.paginate($event.start, $event.end).subscribe(
-      result=> {this.albums = result;}
+      result => { this.albums = result; }
     );
   }
 }
