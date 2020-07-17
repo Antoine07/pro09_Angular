@@ -12,6 +12,7 @@ import { Album } from '../../album';
 export class AlbumComponent implements OnInit {
 
   albums;
+  message : string = null ;
 
   constructor(private aS:AlbumService) {}
 
@@ -27,11 +28,15 @@ export class AlbumComponent implements OnInit {
     console.log(id);
 
   }
-  delete(id){
-    console.log(id);
+  delete(album : Album){
+
+    console.log(album)
+   
+    this.aS.deleteAlbum(album).subscribe( message => {
+
+      this.message = message;
+      this.albums = this.aS.paginate(0,this.aS.paginateNumberPage());
+    });
     
   }
-
-
-
 }

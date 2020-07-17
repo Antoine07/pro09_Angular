@@ -127,6 +127,14 @@ export class AlbumService {
     );
   }
 
+  decrementCount(): Observable<any> {
+
+    // récupérer d'abord le nombre d'album et mettre à jour le nombre d'album
+    return this.http.get<any>(`${albumCountUrl}/.json`).pipe(
+      switchMap(count => this.http.put<void>(`${albumCountUrl}/.json`, count - 1))
+    );
+  }
+
   addAlbum(album: Album): Observable<void> {
    
     return this.http.post<Album>(`${albumsUrl}/.json`, album).pipe(
@@ -152,6 +160,24 @@ export class AlbumService {
   updateAlbum( id : string , album : Album ): Observable<void>{
 
     return this.http.put<void>(`${albumsUrl}/${id}/.json`, album);
+  }
+
+  deleteAlbum(album : Album): Observable<string>{
+
+    const { id } = album;
+
+    return this.http.delete<void>(`${albumsUrl}/${parseInt(id)}/.json`).pipe(
+      switchMap( () => {
+
+        return this.decrementCount().pipe(
+          map( () => {
+
+            return album
+          })
+        )
+      }),
+      map( album => `votre album ${album.name} a bien été supprimé`)
+    )
   }
 
 }

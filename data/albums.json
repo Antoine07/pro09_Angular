@@ -1,26 +1,30 @@
 {
   "albumLists" : [ {
-    "id" : "1",
+    "id" : "0",
     "list" : [ "ad", "qui", "deserunt", "nulla", "cupidatat" ]
   }, {
-    "id" : "2",
+    "id" : "1",
     "list" : [ "ipsum", "nostrud", "aliqua", "sunt" ]
   }, {
-    "id" : "3",
+    "id" : "2",
     "list" : [ "et", "qui", "consectetur", "reprehenderit", "sunt", "Lorem", "laborum" ]
   }, {
-    "id" : "4",
+    "id" : "3",
     "list" : [ "nulla", "velit", "do" ]
   }, {
-    "id" : "5",
+    "id" : "4",
     "list" : [ "exercitation", "magna", "deserunt", "fugiat", "eu", "irure", "dolore" ]
   }, {
-    "id" : "6",
+    "id" : "5",
     "list" : [ "sint", "minim", "nisi", "labore", "consequat", "duis", "elit" ]
   }, {
-    "id" : "7",
+    "id" : "6",
     "list" : [ "in", "nostrud", "deserunt" ]
   }, {
+    "id" : "7",
+    "list" : [ "in", "nostrud" ]
+  }
+  , {
     "id" : "8",
     "list" : [ "in", "nostrud" ]
   }
@@ -28,15 +32,11 @@
     "id" : "9",
     "list" : [ "in", "nostrud" ]
   }
-  , {
-    "id" : "10",
-    "list" : [ "in", "nostrud" ]
-  }
 
 ],
   "albums" : [ 
      {
-      "id": "1",
+      "id": "0",
       "ref": "Hard Rock",
       "name": "Kirby Ortega",
       "title": "pariatur nulla",
@@ -57,7 +57,7 @@
       "notes" :  [10, 10, 12, 11, 12, 14, 11, 13, 10, 17]
   },
     {
-      "id": "2",
+      "id": "1",
       "ref": "Rock",
       "name": "Traci Huber",
       "title": "fugiat non",
@@ -69,7 +69,7 @@
       "notes" : [10, 11, 10, 12, 14, 13, 16, 15, 15, 13]
   },
      {
-      "id": "3",
+      "id": "2",
       "ref": "Rock",
       "name": "Hughes Byrd",
       "title": "laboris nisi",
@@ -89,7 +89,7 @@
       "notes" : [10, 11, 12, 10, 11, 11, 11, 16, 12, 13]
   },
     {
-      "id": "4",
+      "id": "3",
       "ref": "Jazz",
       "name": "Dickerson Maynard",
       "title": "consequat excepteur",
@@ -110,7 +110,7 @@
       "notes" : [12, 12, 13, 14, 13, 12, 18, 14, 14, 16]
   },
      {
-      "id": "5",
+      "id": "4",
       "ref": "Fusion",
       "name": "Lindsey Glover",
       "title": "duis veniam",
@@ -122,7 +122,7 @@
       "notes" : [12, 12, 12, 14, 14, 13, 12, 15, 13, 17]
   },
      {
-      "id": "6",
+      "id": "5",
       "ref": "Jazz",
       "name": "Yesenia Potts",
       "title": "Lorem Lorem",
@@ -143,7 +143,7 @@
       "notes" : [12, 13, 13, 12, 16, 14, 15, 17, 18, 12]
   },
     {
-      "id": "7",
+      "id": "6",
       "ref": "Jazz",
       "name": "Harry Potter",
       "title": "Lorem Potter",
@@ -164,7 +164,7 @@
       "notes" : [13, 13, 14, 16, 15, 15, 17, 17, 17, 17]
   },
      {
-      "id": "8",
+      "id": "7",
       "ref": "Fusion",
       "name": "Harry Potter II",
       "title": "Lorem Potter II",
@@ -185,7 +185,7 @@
       "notes" : [13, 14, 14, 14, 16, 17, 19, 18, 13, 16]
   },
       {
-      "id": "9",
+      "id": "8",
       "ref": "Rock",
       "name": "Harry Potter III",
       "title": "Lorem Potter III",
@@ -206,7 +206,7 @@
       "notes" : [14, 15, 14, 17, 16, 15, 0, 0, 1, 18]
   },
      {
-      "id": "10",
+      "id": "9",
       "ref": "Rock",
       "name": "Harry Potter III",
       "title": "Lorem Potter III",

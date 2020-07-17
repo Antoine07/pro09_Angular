@@ -20,7 +20,7 @@ export class AlbumsComponent implements OnInit {
 
     // récupération des données depuis Firebase avec la méthode HttpClient
     this.aS.getAlbums().subscribe(
-      list_albums => {this.albums = list_albums}
+      list_albums => {this.albums = list_albums; console.log(list_albums)}
     );
 
 
@@ -34,10 +34,6 @@ export class AlbumsComponent implements OnInit {
       result => {this.albums = result;}
     );
 
-    // this.albums = this.aS.paginate(
-    //   0,
-    //   this.aS.paginateNumberPage()
-    // );
 
   }
 

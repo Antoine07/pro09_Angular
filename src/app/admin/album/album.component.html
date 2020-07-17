@@ -1,26 +1,28 @@
-
 <div class="col-sm-8 music">
+  <p *ngIf="message">{{message}}</p>
   <app-paginate (setPaginate)="paginate($event)"></app-paginate>
-  <p><button class="btn btn-info" routerLink="/admin/add" >Add</button></p>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Title</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Option</th>
-            <th scope="col">Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let album of albums | async">
-                <td>{{album.name}}</td>
-                <td>{{album.title}}</td>
-                <td>{{album.duration}} seconds</td>
-                <td> <button class="btn btn-info" routerLink="/admin/update/{{album.id}}">Edit</button></td>
-                <td> <button class="btn btn-danger" (click)="delete(album.id)">Delete</button></td>
-            </tr>
-        </tbody>
-      </table>
+  <p><button class="btn btn-info" routerLink="/admin/add">Add</button></p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Title</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Option</th>
+        <th scope="col">Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let album of albums | async">
+        <td>{{album.id}}</td>
+        <td>{{album.name}}</td>
+        <td>{{album.title}}</td>
+        <td>{{album.duration}} seconds</td>
+        <td> <button class="btn btn-info" routerLink="/admin/update/{{album.id}}">Edit</button></td>
+        <td> <button class="btn btn-danger" (click)="delete(album)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
   <app-paginate (setPaginate)="paginate($event)"></app-paginate>
 </div>
