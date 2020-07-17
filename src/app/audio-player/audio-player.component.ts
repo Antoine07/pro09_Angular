@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AlbumService } from '../album.service';
-import { map, switchMap, takeUntil, take } from 'rxjs/operators';
 import { interval } from 'rxjs';
 import { Album } from '../album';
+import { AlbumService } from '../album.service';
+import { map, switchMap, merge, take } from 'rxjs/operators';
+import { allowedNodeEnvironmentFlags } from 'process';
+
 
 @Component({
   selector: 'app-audio-player',
@@ -42,24 +44,29 @@ export class AudioPlayerComponent implements OnInit {
     // 1. On fait les pipes pour traiter l'information
     // 2. On souscrit pour récupérer la données
     const player$ = this.aS.subjectAlbum.pipe(
-
       switchMap(album => {
+        this.reset();
+        this.title = album.title; // le titre de l'album
 
-        this.title = album.title;
-
+        // on retourne la liste des chansons
         return this.aS.getAlbumList(album.id).pipe(
-          map(albumList => {
-            const { list } = albumList
+          map(listAlbum => {
 
-            this.songs = list.length; // nombre de chansons
+            console.log(listAlbum);
 
-            // on récupère la liste des chansons
-            this.listSongs = list || [];
-            return album
+            if (listAlbum && listAlbum.length > 0) {
+
+              this.listSongs = [ ...listAlbum ]; // créez un nouveau tableau qui ne sera lié à une autre instance de ce tableau
+
+              this.songName = this.listSongs.shift(); // première chanson
+
+              this.ratio = (Math.floor((1 * 60 * 2 / album.duration) * 100) / 100) * 100;
+            }
+
+            return album;
           })
         )
-      }
-      ),
+      }),
       // 2 pipeline ordre des pipes
       // le propre du switchMap c'est de renvoyer un Observable sans effet de bord
       switchMap(album => {
@@ -69,19 +76,23 @@ export class AudioPlayerComponent implements OnInit {
         this.showplayer = true;
 
         return interval$.pipe(
-          map(minutes => minutes + 1),
+          map(minutes => minutes + 2), // deuxième morceau
           map(minutes => {
-            console.log('list chanson')
-            console.log(this.counter, this.listSongs[this.counter]);
-            this.songName = this.listSongs[this.counter];
-            this.counter++;
+
+            if (this.listSongs[this.counter]) {
+              this.songName = this.listSongs[this.counter]; // attention on a fait un shift c'est le deuxième la première fois
+              this.counter++;
+
+              // calcul du ratio du nombre de morceaux
+              // on multiplie par 100 pour avoir 2 chiffres après la virgule
+              return Math.floor((minutes * 60 * 2 / album.duration) * 100) / 100;
+            }
 
             // calcul du ratio du nombre de morceaux
             // on multiplie par 100 pour avoir 2 chiffres après la virgule
-            return Math.floor((minutes * 60 * 2 / album.duration) * 100) / 100;
-
+            return 0;
           }),
-          take(this.songs)
+          take(this.songs) // c'est décalé par rapport au shift
         )
       })
     );
@@ -90,8 +101,7 @@ export class AudioPlayerComponent implements OnInit {
     player$.subscribe(ratio => {
       this.ratio = ratio * 100;
 
-      if (this.songs === this.counter) this.reset();
-
+      if (this.ratio === 0) this.reset();
     });
   }
 

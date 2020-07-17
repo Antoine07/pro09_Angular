@@ -16,6 +16,54 @@
             </div>
         </div>
     </div>
+    <div class="form-group col-md-12">
+        <label for="title">title</label>
+        <input formControlName="title" type="title" class="form-control" id="title" placeholder="title">
+        <div *ngIf="title.invalid && title.touched" class="alert alert-danger">
+            <div *ngIf="title.errors.required">
+                Title is required
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="ref">ref</label>
+        <input formControlName="ref" type="text" class="form-control" id="ref" placeholder="ref">
+        <div *ngIf="ref.invalid && ref.touched" class="alert alert-danger">
+            <div *ngIf="ref.errors.required">
+                ref is required
+            </div>
+            <div *ngIf="ref.errors.pattern">
+                ref must be 5 characters.
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="duration">duration</label>
+        <input formControlName="duration" type="duration" class="form-control" id="duration" placeholder="duration seconde(s)">
+        <div *ngIf="duration.invalid && (duration.dirty || duration.touched)" class="alert alert-danger">
+            <div *ngIf="duration.errors.required">
+                Duration is required
+            </div>
+            <div *ngIf="duration.errors.pattern">
+                Duration must be a numeric value.
+            </div>
+            <div *ngIf="duration.errors.max">
+                Max 900
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="description">Description</label>
+        <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="tags">Tags, séparer les mots par une virgule.</label>
+        <textarea formControlName="tags" class="form-control" id="tags" rows="3"></textarea>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="notes">Notes, séparer les mots par une virgule.</label>
+        <textarea formControlName="notes" class="form-control" id="tags" rows="3"></textarea>
+    </div>
 
     <div class="form-group col-md-12">
         <button [disabled]="albumForm.invalid" type="submit" class="btn btn-primary">Add</button>

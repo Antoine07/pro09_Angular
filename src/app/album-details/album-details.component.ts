@@ -47,10 +47,8 @@ export class AlbumDetailsComponent implements OnInit {
     if(this.album){
       // récupération de la liste des chansons
 
-      this.aS.getAlbumList(this.album.id).pipe(
-        map(filter=>{filter.id = this.album.id; return filter} ),
-      ).subscribe(
-        result => {this.songs = result.list; }
+      this.aS.getAlbumList(this.album.id).subscribe(
+        list =>  { this.songs = list || [] ; console.log(this.songs, this.album.id, this.album.duration) }
       )
       
       // const id = this.album.id ;

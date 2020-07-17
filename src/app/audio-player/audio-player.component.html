@@ -3,7 +3,7 @@
         <div class="progress-bar" role="progressbar" [style.width]="ratio + '%'" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <br>
-    <span class="mr-4" >{{ counter }} / {{ songs }}</span>
+    <span class="mr-4" >{{ counter + 1 }} / {{ songs }}</span>
     <!-- on verifie que l'on a bien des chansons dans le mock-albums -->
     <p>{{title}}<span *ngIf="listSongs.length > 0">Song Name :{{ songName }}</span></p>
   </div>

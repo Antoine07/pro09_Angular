@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { Album, List } from './album';
 import { ALBUM_LISTS } from './mock-albums';
-import { environment, albumsUrl, albumListsUrl, httpOptions } from '../environments/environment';
+import { environment, albumsUrl, albumListsUrl, albumCountUrl, httpOptions } from '../environments/environment';
 import { Subject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 // Service et classe utile
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -55,24 +56,25 @@ export class AlbumService {
   }
 
   // recherche d'une référence dans la liste
-  getAlbumList(id: string): Observable<List> {
-    return this.http.get<List>(albumListsUrl + `/${id}/.json`).pipe(
-      map(album => album) // JSON
+  getAlbumList(id: string): Observable<Array<string>> {
+    return this.http.get<Array<string>>(albumListsUrl + `/${id}/list/.json`).pipe(
+      map(list => list) 
     );
-    //return this._albumList.find(list => list.id === id);
   }
 
-  count(start:number,end:number): Observable<number> {
+  count(start: number, end: number): Observable<number> {
     return this.http.get<Album[]>(albumsUrl + `/.json`).pipe(
-      map(album => {return album ? album.length : 0;})
+      map(albums => _.values(albums)),
+      map(albums => { return albums ? albums.length : 0; })
     );
-    
+
   }
 
   paginate(start: number, end: number): Observable<Album[]> {
 
     return this.http.get<Album[]>(albumsUrl + `/.json`).pipe(
-      map(album =>{ return album.sort((a, b) => { return b.duration - a.duration }).slice(start, end);}),
+      map(albums => _.values(albums)),
+      map(album => { return album.sort((a, b) => { return b.duration - a.duration }).slice(start, end); }),
     );
 
     // utilisez la méthode slice pour la pagination
@@ -84,6 +86,7 @@ export class AlbumService {
   search(word: string): Observable<Album[]> {
 
     return this.http.get<Album[]>(albumsUrl + '/.json', httpOptions).pipe(
+      map(albums => _.values(albums)),
       map(albums => {
         if (word.length > 2) {
           let response = [];
@@ -116,5 +119,39 @@ export class AlbumService {
     this.subjectAlbum.next(album);
   }
 
+  incrementCount(): Observable<any> {
+
+    // récupérer d'abord le nombre d'album et mettre à jour le nombre d'album
+    return this.http.get<any>(`${albumCountUrl}/.json`).pipe(
+      switchMap(count => this.http.put<void>(`${albumCountUrl}/.json`, count + 1))
+    );
+  }
+
+  addAlbum(album: Album): Observable<void> {
+   
+    return this.http.post<Album>(`${albumsUrl}/.json`, album).pipe(
+      switchMap( ref => {
+
+        return this.incrementCount().pipe(
+          map( () => {
+
+            return ref;
+          })
+        )
+      }),
+      // à refactorer on a peut etre pas besoin de l'id dans l'album
+      switchMap( ref => {
+        
+        album.id = ref.name;
+
+        return this.updateAlbum(ref.name, album); // optionnel pour mettre à jour l'id de l'album dans un ablum 
+      })
+    );
+  }
+
+  updateAlbum( id : string , album : Album ): Observable<void>{
+
+    return this.http.put<void>(`${albumsUrl}/${id}/.json`, album);
+  }
 
 }
