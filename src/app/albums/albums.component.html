@@ -1,0 +1,45 @@
+<app-search (searchAlbums)="search($event)"></app-search>
+<div class="row content">
+  <!-- AlbumDetails -->
+  <div class="col-sm-4 video">
+    <app-album-details [album]="selectedAlbum" (onPlay)="playParent($event)"></app-album-details>
+  </div>
+  <!-- .video -->
+  <div class="col-sm-8 music">
+    <h1>{{ titlePage }}</h1>
+    <!-- Pagination -->
+    <app-paginate (setPaginate)="paginate($event)"></app-paginate>
+    <!-- let index permet de récupérer l'indice numérique de la liste -->
+    <div class="card" *ngFor="let album of albums; let index = index;">
+      <div class="card-header">
+        <!-- permet d'afficher l'index -->
+        {{ index + 1 }} Pop <span *ngIf="status==album.id">[play]</span>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><a class="text-info" routerLink="/album/{{album.id}}">{{album.title}}</a></h5>
+        <p class="card-text">{{album.description}}</p>
+        <!-- condition vérifiez si il y a des tags présent dans un album si ce n'est pas le cas la directive ne crée pas l'élément HTML dans le Component -->
+        <ul *ngIf="album.tags" class="list-inline">
+          <li class="list-inline-item" *ngFor="let word of album.tags">
+            <span class="badge badge-info">{{ word }}</span>
+          </li>
+        </ul>
+        <a class="btn btn-outline-dark" href="#" role="button">en</a>
+        <!-- permert de gérer un if plus complexe voir doc Angular -->
+        <ng-template [ngIf]="album.like">
+          <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
+          <small>{{ album.like }}</small>
+        </ng-template>
+        <ng-template [ngIf]="album.duration">
+          <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
+          <small>{{album.duration}} min</small>
+        </ng-template>
+        <button (click)="onSelect(album)" class="btn btn-dark">Details</button>
+      </div>
+    </div>
+    <!-- .card -->
+    <!-- Pagination -->
+    <app-paginate (setPaginate)="paginate($event)"></app-paginate>
+  </div>
+  <!-- .music -->
+</div>

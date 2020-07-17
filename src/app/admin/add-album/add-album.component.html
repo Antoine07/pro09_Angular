@@ -1,0 +1,23 @@
+<form 
+[formGroup]="albumForm"
+(ngSubmit)="onSubmit()"
+>
+    <div class="form-group">
+        <label for="name">Name :</label>
+        <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="emailHelp"
+            placeholder="Enter artist name">
+        <!-- Permet de valider les règles définies dans le TypeScript -->
+        <div *ngIf="name.invalid && name.touched" class="alert alert-danger">
+            <div *ngIf="name.errors.required">
+                Name is required
+            </div>
+            <div *ngIf="name.errors.minlength">
+                Name must be at least 5 characters long.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group col-md-12">
+        <button [disabled]="albumForm.invalid" type="submit" class="btn btn-primary">Add</button>
+    </div>
+</form>

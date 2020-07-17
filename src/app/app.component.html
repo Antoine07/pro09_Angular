@@ -1,0 +1,48 @@
+<div class="container-fuild principal">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand">{{ title }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" *ngIf="authService.authState">
+                    <a class="nav-link" routerLink="/albums" routerLinkActive="active">Home
+                    </a>
+                </li>
+                
+                <li class="nav-item active" *ngIf="!authService.authState">
+                    <a class="nav-link" routerLink="/login" routerLinkActive="active">
+                        Se connecter
+                    </a>
+                </li>
+                <li class="nav-item active" *ngIf="authService.authState">
+                    <button class="btn btn-danger" (click)="logout()">Disconnect</button>
+                </li>
+                <li class="nav-item active" *ngIf="authService.authState">
+                    <a class="nav-link" routerLink="/admin" routerLinkActive="active">
+                        Admin
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a class="nav-link">
+                        <ng-template  [ngIf]="timer">
+                            heure : {{ timer.hour }} minute : {{ timer.minute }} second : {{ timer.second }}
+                        </ng-template>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- place de l'audio player déclenché depuis le component AlbumDetailsComponent -->
+    <!-- 
+    à la place du sélecteur des albums on mettra maintenant le chargement des components
+    -->
+    <div>
+        <app-audio-player></app-audio-player>
+        <router-outlet></router-outlet>
+    </div>
+</div>
