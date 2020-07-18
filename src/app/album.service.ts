@@ -33,7 +33,7 @@ export class AlbumService {
     return this.http.get<Album[]>(albumsUrl + '/.json', httpOptions).pipe(
       // Préparation des données avec _.values pour avoir un format exploitable dans l'application => Array de values JSON
       map(albums => _.values(albums)),
-      map(albums => albums.filter(a => a !== null)), // ré-index les albums correctement
+      map(albums => albums.filter(a => a !== null)), // ré-index les albums correctement au cas où il y aurait un mauvais format de données
       // Ordonnez les albums par ordre de durées décroissantes
       map(albums => {
         return albums.sort(
@@ -81,6 +81,7 @@ export class AlbumService {
 
     return this.http.get<Album[]>(albumsUrl + '/.json', httpOptions).pipe(
       map(albums => _.values(albums)),
+      map(albums => albums.filter(a => a !== null)), // ré-index les albums correctement
       map(albums => {
         if (word.length > 2) {
           let response = [];
