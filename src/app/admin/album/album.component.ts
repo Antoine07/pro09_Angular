@@ -29,7 +29,7 @@ export class AlbumComponent implements OnInit {
   delete(album : Album){
 
     this.aS.deleteAlbum(album).subscribe( info => {
-      this.aS.sendCurrentNumberPage.next( info.count ); // recalculer le nombre d'item dans la pagination
+      this.aS.sendCurrentNumberPage.next( 1 ); // recalculer le nombre d'item dans la pagination
       this.message = `L'album ${info.album.name} a bien été supprimé`;
       this.albums = this.aS.paginate(0,this.aS.paginateNumberPage()); // reload les albums après suppression
     });

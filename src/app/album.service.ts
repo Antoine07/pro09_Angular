@@ -36,10 +36,9 @@ export class AlbumService {
       map(albums => albums.filter(a => a !== null)), // ré-index les albums correctement
       // Ordonnez les albums par ordre de durées décroissantes
       map(albums => {
-        return albums
-        // return albums.sort(
-        //   (a, b) => { return b.duration - a.duration }
-        // );
+        return albums.sort(
+          (a, b) => { return b.duration - a.duration }
+        );
       })
     )
   }
@@ -74,7 +73,7 @@ export class AlbumService {
     return this.http.get<Album[]>(albumsUrl + `/.json`).pipe(
       map(albums => _.values(albums)),
       map(albums => albums.filter(a => a !== null)), // ré-index les albums correctement
-      map(albums => { console.log(albums); return albums.sort((a, b) => { return b.duration - a.duration }).slice(start, end); }),
+      map(albums => { return albums.sort((a, b) => { return b.duration - a.duration }).slice(start, end); }),
     );
   }
 
