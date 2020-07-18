@@ -18,7 +18,6 @@ export class AlbumComponent implements OnInit {
 
   ngOnInit(): void {
     this.albums = this.aS.paginate(0,this.aS.paginateNumberPage());
-
     this.message = "";
   }
 
